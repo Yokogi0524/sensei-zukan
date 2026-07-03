@@ -502,43 +502,48 @@
 
             .nav-links {
                 position: fixed;
-                top: 100px; /* ヘッダーのすぐ下から配置 */
+                top: 100px; /* ヘッダー（高さ100px）のすぐ下からぴったり配置 */
                 left: 0;
                 width: 100%;
-                height: calc(100vh - 100px); /* 画面いっぱいの高さ */
-                background: white;
+                height: calc(100vh - 100px); /* 画面の残りの高さをいっぱいに使う */
+                background-color: #ffffff !important; /* 背景を真っ白に強制指定 */
+
                 flex-direction: column; /* タブを縦並びにする */
                 align-items: center;
                 justify-content: flex-start;
                 padding-top: 2rem;
-                gap: 1rem;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-                /* 普段は右側に隠しておく */
+                gap: 0.5rem;
+                /* 【最重要】重ね順を最前面に引っ張り出す */
+                z-index: 99999 !important;
+                /* 普段は画面の右側に完全に隠しておく */
                 transform: translateX(100%);
-                transition: transform 0.3s ease;
-                z-index: 1050;
-                overflow-y: auto; /* メニューが多くてはみ出したらスクロール可能に */
+                transition: transform 0.3s ease-in-out;
+                /* メニューが多くて画面からはみ出したら縦スクロールできるようにする */
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
             }
 
-                /* 「open」クラスがついたら画面内にスライドインさせる */
+                /* 「open」クラスがついたら画面の左端（0）ぴったりにスライドインさせる */
                 .nav-links.open {
-                    transform: translateX(0);
+                    transform: translateX(0) !important;
                 }
 
             .nav-item {
-                height: auto;
-                padding: 15px 0;
-                width: 80%;
+                height: auto !important;
+                padding: 15px 20px !important;
+                width: 85%;
+                text-align: center;
                 justify-content: center;
-                font-size: 1.1rem;
-                /* スマホ時は下線ではなく、文字全体を優しく目立たせるスタイルに調整 */
-                border-bottom: 2px solid #f1f5f9;
+                font-size: 1.1rem !important;
+                color: #334155 !important; /* 文字の色を濃いグレーにして見やすく */
+                border-bottom: 1px solid #e2e8f0; /* 各メニューの区切り線 */
+                background: transparent;
             }
 
                 .nav-item.active {
-                    border-bottom-color: transparent !important;
-                    background: #f8fafc;
+                    background-color: #f1f5f9 !important;
                     border-radius: 8px;
+                    font-weight: 700;
                 }
         }
     </style>
