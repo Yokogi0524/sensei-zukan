@@ -667,81 +667,82 @@
     </div> <!-- .container の閉じタグ -->
     <!-- 3. スクリプト -->
     <script>
-        // 新しいナビゲーションタブ（.nav-item）を取得
-        const navItems = document.querySelectorAll('.nav-links .nav-item');
-        const cards = document.querySelectorAll('.teacher-card');
-        const searchInput = document.getElementById('teacherSearch');
+        // ページが完全に読み込まれてから安全に実行する
+        document.addEventListener('DOMContentLoaded', () => {
+            // 各要素の取得
+            const navItems = document.querySelectorAll('.nav-links .nav-item');
+            const cards = document.querySelectorAll('.teacher-card');
+            const searchInput = document.getElementById('teacherSearch');
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
 
-        function filterTeachers() {
-            const searchTerm = searchInput.value.toLowerCase();
+            // 先生の絞り込み関数
+            function filterTeachers() {
+                if (!searchInput) return;
+                const searchTerm = searchInput.value.toLowerCase();
 
-            // 現在アクティブになっているナビゲーションのターゲット（学科名）を取得
-            const activeNav = document.querySelector('.nav-item.active');
-            const activeDept = activeNav ? activeNav.getAttribute('data-target') : 'all';
+                // 現在アクティブになっているナビゲーションを取得
+                const activeNav = document.querySelector('.nav-item.active');
+                const activeDept = activeNav ? activeNav.getAttribute('data-target') : 'all';
 
-            cards.forEach(card => {
-                const name = card.querySelector('.card-name').textContent.toLowerCase();
-                const dept = card.getAttribute('data-dept');
-                const tags = card.querySelector('.card-tags').textContent.toLowerCase();
+                cards.forEach(card => {
+                    const name = card.querySelector('.card-name').textContent.toLowerCase();
+                    const dept = card.getAttribute('data-dept');
+                    const tags = card.querySelector('.card-tags').textContent.toLowerCase();
 
-                // 学科の一致確認
-                const matchesDept = (activeDept === 'all' || dept === activeDept);
-                // 検索ワードの一致確認
-                const matchesSearch = name.includes(searchTerm) || tags.includes(searchTerm);
+                    // 学科と検索ワードの一致確認
+                    const matchesDept = (activeDept === 'all' || dept === activeDept);
+                    const matchesSearch = name.includes(searchTerm) || tags.includes(searchTerm);
 
-                if (matchesDept && matchesSearch) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
+                    if (matchesDept && matchesSearch) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            // --- ナビゲーションタブのクリックイベント（スマホ開閉もここに統合） ---
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    // data-target 属性を持っていないタブ（例：「先生図鑑とは」）はそのままページ遷移させる
+                    if (!item.hasAttribute('data-target')) {
+                        return;
+                    }
+
+                    // data-target を持っているタブは、ページ遷移を止めてその場で絞り込む
+                    e.preventDefault();
+
+                    // すべてのタブから active クラスを消す
+                    navItems.forEach(nav => nav.classList.remove('active'));
+
+                    // クリックされたタブに active クラスをつける
+                    item.classList.add('active');
+
+                    // 先生の絞り込みを実行
+                    filterTeachers();
+
+                    // ★【スマホ対応】学科を選んだら、三本線メニューを自動で閉じる
+                    if (menuToggle && navLinks) {
+                        menuToggle.classList.remove('open');
+                        navLinks.classList.remove('open');
+                    }
+                });
             });
-        }
 
-        // ナビゲーションタブをクリックしたときのイベント
-        // ナビゲーションタブをクリックしたときのイベント
-        navItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                // data-target 属性を持っていないタブ（例：新設した「先生図鑑とは」）はそのままページ遷移させる
-                if (!item.hasAttribute('data-target')) {
-                    return;
-                }
+            // 検索入力のイベント
+            if (searchInput) {
+                searchInput.addEventListener('input', filterTeachers);
+            }
 
-                // data-target を持っているタブ（先生一覧や各学科）は、ページ遷移を止めてその場で絞り込む
-                e.preventDefault();
-
-                // すべてのタブから active クラスを消す
-                navItems.forEach(nav => nav.classList.remove('active'));
-
-                // クリックされたタブに active クラスをつける
-                item.classList.add('active');
-
-                // 先生の絞り込みを実行
-                filterTeachers();
-            });
-        });
-
-        // 検索入力のイベント
-        searchInput.addEventListener('input', filterTeachers);
-
-        // --- ハンバーガーメニュー用の開閉スクリプト ---
-        const menuToggle = document.getElementById('menuToggle');
-        const navLinks = document.getElementById('navLinks');
-
-        // 三本線ボタンをクリックしたとき
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('open');
-            navLinks.classList.toggle('open');
-        });
-
-        // タブメニュー内のリンクをクリックしたとき（スマホで学科を選んだら自動で閉じる）
-        navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                // data-target を持っている（その場で絞り込む）学科タブの場合だけ閉じる
-                if (item.hasAttribute('data-target')) {
-                    menuToggle.classList.remove('open');
-                    navLinks.classList.remove('open');
-                }
-            });
+            // --- ハンバーガーメニュー用の開閉イベント ---
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', (e) => {
+                    e.preventDefault(); // スマホでの予期せぬスクロールや連打バグを防止
+                    menuToggle.classList.toggle('open');
+                    navLinks.classList.toggle('open');
+                });
+            }
         });
     </script>
 </body>
