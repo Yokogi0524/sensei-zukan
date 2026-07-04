@@ -138,6 +138,18 @@
                 background: linear-gradient(135deg, var(--color-c), #1d4ed8);
             }
 
+            /* ▽【追加】人文科学科と数理科学科のバナー（上部背景）をグレーにする */
+            .teacher-card[data-dept="人文科学科"] .card-banner,
+            .teacher-card[data-dept="数理科学科"] .card-banner {
+                background: linear-gradient(135deg, #cbd5e1, #94a3b8) !important;
+            }
+
+            /* ▽【追加】丸いアイコンの枠自体も以前のグレーの雰囲気に合わせる場合 */
+            /*.teacher-card[data-dept="人文科学科"] .card-icon-wrap,
+            .teacher-card[data-dept="数理科学科"] .card-icon-wrap {
+                background-color: #f1f5f9 !important;
+            }*/
+
         .card-banner {
             height: 100px;
         }
@@ -261,52 +273,52 @@
 
         /* --- 各学科のアクティブカラー指定 --- */
         .nav-item[data-target="all"].active {
+            background-color: #f1f5f9 !important; /* 淡いグレー背景 */
+            color: #334155 !important; /* 濃いグレー文字 */
             border-bottom-color: var(--color-all) !important;
-            color: var(--color-all) !important;
-            font-weight: 700;
         }
 
+        /* 機械工学科（赤系） */
         .nav-item[data-target="機械工学科"].active {
-            border-bottom-color: var(--color-m) !important;
-            color: var(--color-m) !important;
-            font-weight: 700;
+            background-color: #fff5f5 !important; /* ごく淡い赤背景 */
+            color: #b91c1c !important; /* 読みやすい濃い赤文字 */
+            border-bottom-color: var(--color-m) !important; /* 元の機械工学科の赤下線 */
         }
 
+        /* 電気情報工学科（オレンジ系） */
         .nav-item[data-target="電気情報工学科"].active {
-            border-bottom-color: var(--color-e) !important;
-            color: var(--color-e) !important;
-            font-weight: 700;
+            background-color: #fffbeb !important; /* ごく淡いオレンジ背景 */
+            color: #c2410c !important; /* 読みやすい濃いオレンジ文字 */
+            border-bottom-color: var(--color-e) !important; /* 元の電気情報工学科のオレンジ下線 */
         }
 
+        /* 電子制御工学科（緑系） */
         .nav-item[data-target="電子制御工学科"].active {
-            border-bottom-color: var(--color-d) !important;
-            color: var(--color-d) !important;
-            font-weight: 700;
+            background-color: #f0fdf4 !important; /* ごく淡い緑背景 */
+            color: #15803d !important; /* 読みやすい濃い緑文字 */
+            border-bottom-color: var(--color-d) !important; /* 元の電子制御工学科の緑下線 */
         }
 
+        /* 情報工学科（紫系） */
         .nav-item[data-target="情報工学科"].active {
-            border-bottom-color: var(--color-j) !important;
-            color: var(--color-j) !important;
-            font-weight: 700;
+            background-color: #faf5ff !important; /* ごく淡い紫背景 */
+            color: #7e22ce !important; /* 読みやすい濃い紫文字 */
+            border-bottom-color: var(--color-j) !important; /* 元の情報工学科の紫下線 */
         }
 
+        /* 環境・建設工学科（青系） */
         .nav-item[data-target="環境・建設工学科"].active {
-            border-bottom-color: var(--color-c) !important;
-            color: var(--color-c) !important;
-            font-weight: 700;
+            background-color: #eff6ff !important; /* ごく淡い青背景 */
+            color: #1d4ed8 !important; /* 読みやすい濃い青文字 */
+            border-bottom-color: var(--color-c) !important; /* 元の環境・建設工学科の青下線 */
         }
 
+        /* 人文科学科・数理科学科（グレー系） */
         .nav-item[data-target="人文科学科"].active,
         .nav-item[data-target="数理科学科"].active {
+            background-color: #f8fafc !important; /* 淡いグレー背景 */
+            color: #475569 !important; /* 濃いグレー文字 */
             border-bottom-color: var(--color-all) !important;
-            color: var(--color-all) !important;
-            font-weight: 700;
-        }
-
-        /* --- 新学科の先生カード用バナーグラデーション --- */
-        .teacher-card[data-dept="人文科学科"] .card-banner,
-        .teacher-card[data-dept="数理科学科"] .card-banner {
-            background: linear-gradient(135deg, var(--color-all), #475569);
         }
 
         /* ---------- スマホ用ハンバーガーメニューのスタイル ---------- */
@@ -488,7 +500,7 @@
                     <div class="card-icon-wrap"><img src="ashida-yoichiro.jpg" alt="芦田 洋一郎"></div>
                     <h2 class="card-name">芦田 洋一郎</h2>
                     <span class="card-dept">電気情報工学科 / 准教授</span>
-                    <div class="card-tags"><span class="tag">#制御工学</span><span class="tag">#基礎コンピュータ工学</span></div>
+                    <div class="card-tags"><span class="tag">#自動制御</span><span class="tag">#基礎コンピュータ工学</span></div>
                 </div>
             </a>
 
