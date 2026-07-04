@@ -354,8 +354,14 @@
                 gap: 1rem;
             }
 
+            /* 【修正】文字サイズを2.2remから、スマホ向けに適切な大きさ（1.6rem等）に変更 */
+            .profile-names h1 {
+                font-size: 1.6rem;
+            }
+
+            /* 【修正】中央寄せ（center）になっていたものを左寄せ（left）に変更 */
             .profile-main {
-                text-align: center;
+                text-align: left;
             }
 
             .message {
@@ -366,9 +372,10 @@
                 max-width: 100%;
             }
 
+            /* 【修正】縦並び＆中央寄せになっていたのを、左寄せ（flex-start）に変更 */
             .info-row {
                 flex-direction: column;
-                align-items: center;
+                align-items: flex-start;
                 gap: 0.5rem;
             }
         }
@@ -394,7 +401,9 @@
                         <img src="horiuchi-tadashi.jpg" alt="堀内教授">
                     </div>
                     <div class="profile-actions">
-                        <button class="btn btn-secondary">先生図鑑 001</button>
+                        <a href="https://yokogi0524.github.io/sensei-zukan/index.html"
+                           class="btn btn-secondary"
+                           style="text-decoration: none; display: inline-block; line-height: 1.2; vertical-align: middle;">先生図鑑 001</a>
                     </div>
                 </div>
 
