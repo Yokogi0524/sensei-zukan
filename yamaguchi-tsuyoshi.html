@@ -1,0 +1,620 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>先生図鑑 山口剛士 准教授</title>
+    <link rel="icon" href="sensei-zukan-icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="sensei-zukan-icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --bg-color: #f8fafc;
+            --text-main: #2d3436;
+            --text-muted: #64748b;
+            --primary-color: #3b82f6; /* index.htmlの「--color-c」と同じ鮮やかな青 */
+            --accent-color: #1d4ed8; /* index.htmlのグラデーションで使われている濃い青 */
+            --student-bubble-bg: #ffffff;
+            --student-border: #e2e8f0;
+            --teacher-bubble-bg: #eff6ff; /* index.htmlのナビで使われているごく淡い青 */
+            --teacher-border: #dbeafe; /* 淡い青に合わせた枠線（お好みで） */
+            --marker-color: rgba(59, 130, 246, 0.2); /* 青系のマーカー透過色 */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- SNS Style Profile Card --- */
+        .profile-container {
+            max-width: 1000px;
+            margin: 1rem auto;
+            padding: 0 0.5rem;
+        }
+
+        .sns-profile-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f6;
+        }
+
+        .cover-photo {
+            height: 160px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+        }
+
+        .profile-main {
+            padding: 0 2rem 2rem;
+            position: relative;
+            margin-top: -50px;
+        }
+
+        .profile-top-row {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .profile-icon-wrap {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: white;
+            padding: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+            .profile-icon-wrap img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                object-fit: cover;
+                object-position: center top;
+            }
+
+        .profile-actions {
+            display: flex;
+            gap: 0.5rem;
+            padding-bottom: 5px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: var(--text-main);
+            min-width: 90px;
+            font-size: 1.1rem;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .info-tag {
+            padding: 0.3rem 0.9rem;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 1rem;
+            background: rgba(59, 130, 246, 0.08); /* 青の透過背景 */
+            color: var(--accent-color);
+            border: 1px solid rgba(59, 130, 246, 0.25); /* 青の透過枠線 */
+            transition: all 0.2s;
+        }
+
+            .info-tag:hover {
+                background: rgba(59, 130, 246, 0.15);
+                color: var(--accent-color);
+            }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+            transform: translateY(-1px);
+        }
+
+        .profile-names h1 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 2.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .profile-names .handle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 1.25rem;
+            display: block;
+        }
+
+        .profile-bio {
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #475569;
+        }
+
+        /* --- Article Style Interview Section --- */
+        .article-container {
+            max-width: 950px;
+            margin: 1rem auto 2rem;
+            padding: 0 1rem;
+        }
+
+        .qa-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+            .message.teacher {
+                flex-direction: row-reverse;
+            }
+
+        .avatar-box {
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+            .avatar-box img {
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                border: 2px solid white;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+                object-fit: cover;
+                object-position: center top;
+            }
+
+        .avatar-label {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+        }
+
+        .bubble {
+            position: relative;
+            padding: 1.25rem 1.75rem;
+            border-radius: 28px;
+            font-size: 1rem;
+            background: white;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+            max-width: 80%;
+        }
+
+        .student .bubble {
+            border: 1px solid var(--student-border);
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 28px;
+            margin-left: 0;
+            max-width: 100%;
+            font-weight: 700;
+        }
+
+        .student-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .teacher .bubble {
+            background-color: var(--teacher-bubble-bg);
+            border: 1px solid var(--teacher-border);
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 28px;
+        }
+
+        .bubble-image-slot {
+            margin-top: 1rem;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+            background: rgba(255,255,255,0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+            .bubble-image-slot .img-placeholder {
+                width: 100%;
+                aspect-ratio: 16 / 9;
+                background: #eef2f6;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--text-muted);
+                font-size: 0.8rem;
+                font-weight: 500;
+            }
+
+        .bubble-image-caption {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: #fff;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .clickable-answer {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .clickable-answer:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            }
+
+        .answer-content {
+            display: none;
+            margin-top: 0.5rem;
+            font-weight: 400;
+        }
+
+        .dots {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .is-opened {
+            cursor: default !important;
+        }
+
+            .is-opened .answer-content {
+                display: block;
+                animation: fadeIn 0.5s ease;
+            }
+
+            .is-opened .dots {
+                display: none;
+            }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(transparent 60%, var(--marker-color) 60%);
+            font-weight: 700;
+        }
+
+        .article-footer {
+            max-width: 950px;
+            margin: 0 auto 4rem;
+            padding: 2rem 1rem;
+            border-top: 1px solid #e2e8f0;
+            text-align: right;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 640px) {
+            .profile-top-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .profile-names h1 {
+                font-size: 1.6rem;
+            }
+
+            .profile-main {
+                text-align: left;
+            }
+
+            .message {
+                gap: 0.8rem;
+            }
+
+            .bubble {
+                max-width: 100%;
+            }
+
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        .bubble-image-slot img {
+            width: 50%;
+            height: auto;
+            display: block;
+            margin: 10px auto;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-container">
+        <header class="sns-profile-card">
+            <div class="cover-photo"></div>
+            <div class="profile-main">
+                <div class="profile-top-row">
+                    <div class="profile-icon-wrap">
+                        <img src="yamaguchi-tsuyoshi.png" alt="山口准教授">
+                    </div>
+                    <div class="profile-actions">
+                        <a href="https://yokogi0524.github.io/sensei-zukan/index.html"
+                           class="btn btn-secondary"
+                           style="text-decoration: none; display: inline-block; line-height: 1.2; vertical-align: middle;">先生図鑑 003</a>
+                    </div>
+                </div>
+
+                <div class="profile-names">
+                    <h1>山口剛士 / 准教授</h1>
+                    <span class="handle">Dr. Tsuyoshi Yamaguchi / 山口研究室</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">学科</span>
+                    <div class="tag-container">
+                        <span class="info-tag">#環境・建設工学科</span>
+                        <span class="info-tag">#C科</span>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">教科内容</span>
+                    <div class="tag-container">
+                        <span class="info-tag">#総合科学</span>
+                        <span class="info-tag">#測量実習</span>
+                        <span class="info-tag">#構造力学</span>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">研究分野</span>
+                    <div class="tag-container">
+                        <span class="info-tag">#環境微生物</span>
+                        <span class="info-tag">#水処理</span>
+                        <span class="info-tag">#分子生物学</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <main class="article-container">
+        <div class="qa-list">
+
+            <!-- 質問1 -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    現在先生が取り組まれている研究について教えてください。
+                </div>
+            </div>
+
+            <div class="message teacher">
+                <div class="avatar-box">
+                    <img src="yamaguchi-tsuyoshi.png" alt="山口先生">
+                    <span class="avatar-label">山口先生</span>
+                </div>
+                <div class="bubble clickable-answer">
+                    <span class="dots">・・・</span>
+                    <div class="answer-content">
+                        環境建設工学科といってもその中に生物、地学、構造力学など沢山の分野があります。授業では、総合科学、測量学、工学実験などの幅広い分野を担当していますが、現在は松江高専の中で唯一生物に関する研究をしています。松江高専で研究を始めた当初は校内に実験の設備が整っておらず、機材を集めるところからスタートしました。環境中の微生物を用いた植生浄化槽（植物と微生物の働きを利用して水を浄化する仕組み）の研究で、そのために衛生工学や環境中の微生物を用いた処理を扱う環境工学を専門としています。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 質問2 -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    卒研スタートアップについて教えてください。
+                </div>
+            </div>
+
+            <div class="message teacher">
+                <div class="avatar-box">
+                    <img src="yamaguchi-tsuyoshi.png" alt="山口先生">
+                    <span class="avatar-label">山口先生</span>
+                </div>
+                <div class="bubble clickable-answer">
+                    <span class="dots">・・・</span>
+                    <div class="answer-content">
+                        卒業研究はいくつかあり、例えば微生物で土を固めてその微生物を培養する研究や、まだ発見されていない微生物を単離する方法の開発に取り組んでいる学生がいます。また、宍道湖 の生態系を守ることを目的に、護岸整備を設置して集まる魚を調査したり、湖水から環境DNAを抽出して生息する生物を解析したりする研究も行われています。専攻科では死んでいる微生物を光らせる新しい方法の開発にも取り組んでいます。
+                        <br>
+                        スタートアップでは、学生のアイデアの可能性に目を向け、そこから新しいプロジェクトを始めています。例えばいま行っているのは、出雲そばが有名なことに着目し、本来廃棄されるはずだったそば殻と微生物を活用して土壌を固め、そこに海藻の種を入れて海底に落としてウニなどに食べられてしまった海藻を育てて魚たちを再生する研究です。今後は新しい微生物を見つける研究にも取り組んでいく予定です。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 質問3 -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    先生についての経歴についてを教えてください。
+                </div>
+            </div>
+
+            <div class="message teacher">
+                <div class="avatar-box">
+                    <img src="yamaguchi-tsuyoshi.png" alt="山口先生">
+                    <span class="avatar-label">山口先生</span>
+                </div>
+                <div class="bubble clickable-answer">
+                    <span class="dots">・・・</span>
+                    <div class="answer-content">
+                        私の地元は自然豊かなところで、その環境を残したいという思いから松江高専へ入学しました。松江高専を卒業して長岡技術科学大学に進学した時に、国際的に水関係の研究をしておられる教授に出会い、将来深刻化していくであろう水の問題を研究することで世界中の人に貢献できると思い水処理などの専門を選びました。その後研究が好きで博士課程まで進んだ際に、たまたま母校である松江高専の公募が出ていて現在は教員をしています。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 質問4 -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    学生時代の経験について教えてください。
+                </div>
+            </div>
+
+            <div class="message teacher">
+                <div class="avatar-box">
+                    <img src="yamaguchi-tsuyoshi.png" alt="山口先生">
+                    <span class="avatar-label">山口先生</span>
+                </div>
+                <div class="bubble clickable-answer">
+                    <span class="dots">・・・</span>
+                    <div class="answer-content">
+                        私は高専生の頃に寮長を務めていました。私が在学していた当時、寮はかなり荒れていて、すごく汚かったですし、集団生活をしていく上でのルールや上下関係が厳しかったです。このような状況を見直すため、大掃除をする習慣や新たな取り組みを自ら主体となって始めました。その結果、寮の生活環境は以前よりもかなり改善されていると思います。
+                        <br />
+                        また、大学生の頃は研究に打ち込みました。私が在籍していた長岡技術科学大学には「実務訓練」という半年間企業で実務を行う機会があり、４年生のときに台湾へ行きました。大学で進めていた微生物に関する研究を現地の大学でもさせていただきました。微生物の研究は自分の興味のある分野だったこともあり、研究に没頭することができました。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 質問5 -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    研究者を目指されたきっかけを教えてください。
+                </div>
+            </div>
+
+            <div class="message teacher">
+                <div class="avatar-box">
+                    <img src="yamaguchi-tsuyoshi.png" alt="山口先生">
+                    <span class="avatar-label">山口先生</span>
+                </div>
+                <div class="bubble clickable-answer">
+                    <span class="dots">・・・</span>
+                    <div class="answer-content">
+                        高専に入学し、環境・建設工学科で植生浄化槽に興味を持ったことが環境分野へ進むきっかけでした。大学に進学してからは、水処理関係の先生に出会いました。その先生はとても国際的に活動しておられて、インド、ベトナム、タイなど世界各地を飛び回りながら、国際学会にも頻繁に参加されていました。先生のそばで学び、留学なども経験して感じたことは、 「水」は世界中の人々に貢献できる分野であり、「水」を専門にすれば、仕事がなくなることもないということでした。研究室には多くの博士課程の学生がいたため、その刺激的な環境も研究を続ける後押しとなりました。
+                        <br />
+                        教員になることについては当初の目的ではなかったのですが、博士課程3年生の時に、母校である松江高専の公募が出たことがきっかけとなりました。現在は教員として、人の人生を左右するという仕事の魅力や、学生が成長し、自分の勧めた道で活躍してくれることに喜びを感じながら研究と教育に取り組んでいます。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 質問6 -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    高専生へのメッセージをお願いします。
+                </div>
+            </div>
+
+            <div class="message teacher">
+                <div class="avatar-box">
+                    <img src="yamaguchi-tsuyoshi.png" alt="山口先生">
+                    <span class="avatar-label">山口先生</span>
+                </div>
+                <div class="bubble clickable-answer">
+                    <span class="dots">・・・</span>
+                    <div class="answer-content">
+                        高専生活では比較的時間に余裕があると思います。その時間で、ぜひ何かをやってほしいと思います。何もしなければ何も始まらないし、結果は成長か成功のどちらかで失敗することはないです。高専は受験勉強がないということもメリットのひとつだと思うので、そこで生まれた時間を部活動に打ち込む、何か新しいことを始めてみるなど、挑戦のために使ってほしいと思います。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 質問7 -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    中学生へのメッセージをお願いします。
+                </div>
+            </div>
+
+            <div class="message teacher">
+                <div class="avatar-box">
+                    <img src="yamaguchi-tsuyoshi.png" alt="山口先生">
+                    <span class="avatar-label">山口先生</span>
+                </div>
+                <div class="bubble clickable-answer">
+                    <span class="dots">・・・</span>
+                    <div class="answer-content">
+                        いろいろな挑戦ができるのが高専だと思うのでものづくりでもいいし生物でもいいし、興味があることがあれば来てもらいたいなと思います。高専は好きなことを好きなだけできるというのも魅力のひとつだと思います。実際、そういう学生の集まりだと思っていて、受験のための勉強ではないので興味のあることの仲間づくりはしやすいのかなとも思います。
+                        <br />
+                        どうしても受験の倍率の問題もあるし、中学生の中では高専は難しそうと感じている子もいると思いますが、実際入ってみたら勉強も部活も友達同士で助け合うこともできるし何とかなるので本当に興味のある人は頑張ってほしいです。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 最後のまとめ（感想） -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    今回の取材を通して、松江高専の卒業生である山口先生の貴重な学生時代のエピソードや、研究への思いに触れることができました。特に「AIに聞いたらすぐに答えが返ってくる時代だからこそ、答えがわからないようなものに挑戦してほしい」という言葉が印象的でした。高専ならではの自由な時間を活かし、様々なことに挑戦しようと思いました。
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="article-footer">
+        <p>記事作成日：2026年02月23日</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.clickable-answer').forEach(bubble => {
+            bubble.addEventListener('click', function () {
+                if (!this.classList.contains('is-opened')) {
+                    this.classList.add('is-opened');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
