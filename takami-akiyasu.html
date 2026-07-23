@@ -1,0 +1,613 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>先生図鑑 高見昭康 教授</title>
+    <link rel="icon" href="sensei-zukan-icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="sensei-zukan-icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --bg-color: #f8fafc;
+            --text-main: #2d3436;
+            --text-muted: #64748b;
+            --primary-color: #ef4444; /* #3b82f6 (青) ➔ 機械工学科の赤に変更 */
+            --accent-color: #b91c1c; /* #1d4ed8 (濃い青) ➔ グラデーションの濃い赤に変更 */
+            --student-bubble-bg: #ffffff;
+            --student-border: #e2e8f0;
+            --teacher-bubble-bg: #fff5f5; /* #eff6ff (ごく淡い青) ➔ ごく淡い赤に変更 */
+            --teacher-border: #fecdd3; /* #dbeafe (青系枠線) ➔ 赤系枠線に変更 */
+            --marker-color: rgba(239, 68, 68, 0.2); /* 青系の透過 ➔ 赤系の透過に変更 */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- SNS Style Profile Card --- */
+        .profile-container {
+            max-width: 1000px;
+            margin: 1rem auto;
+            padding: 0 0.5rem;
+        }
+
+        .sns-profile-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f6;
+        }
+
+        .cover-photo {
+            height: 160px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+        }
+
+        .profile-main {
+            padding: 0 2rem 2rem;
+            position: relative;
+            margin-top: -50px;
+        }
+
+        .profile-top-row {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .profile-icon-wrap {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: white;
+            padding: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+            .profile-icon-wrap img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                object-fit: cover;
+                object-position: center top;
+            }
+
+        .profile-actions {
+            display: flex;
+            gap: 0.5rem;
+            padding-bottom: 5px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: var(--text-main);
+            min-width: 90px;
+            font-size: 1.1rem;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .info-tag {
+            padding: 0.3rem 0.9rem;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 1rem;
+            background: rgba(239, 68, 68, 0.08); /* rgba(59, 130, 246, 0.08) ➔ 赤の透過背景 */
+            color: var(--accent-color);
+            border: 1px solid rgba(239, 68, 68, 0.25); /* rgba(59, 130, 246, 0.25) ➔ 赤の透過枠線 */
+            transition: all 0.2s;
+        }
+
+            .info-tag:hover {
+                background: rgba(239, 68, 68, 0.15); /* rgba(59, 130, 246, 0.15) ➔ 赤のホバー時背景 */
+                color: var(--accent-color);
+            }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+            transform: translateY(-1px);
+        }
+
+        .profile-names h1 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 2.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .profile-names .handle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 1.25rem;
+            display: block;
+        }
+
+        .profile-bio {
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #475569;
+        }
+
+        /* --- Article Style Interview Section --- */
+        .article-container {
+            max-width: 950px;
+            margin: 1rem auto 2rem;
+            padding: 0 1rem;
+        }
+
+        .qa-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+            .message.teacher {
+                flex-direction: row-reverse;
+            }
+
+        .avatar-box {
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+            .avatar-box img {
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                border: 2px solid white;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+                object-fit: cover;
+                object-position: center top;
+            }
+
+        .avatar-label {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+        }
+
+        .bubble {
+            position: relative;
+            padding: 1.25rem 1.75rem;
+            border-radius: 28px;
+            font-size: 1rem;
+            background: white;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+            max-width: 80%;
+        }
+
+        .student .bubble {
+            border: 1px solid var(--student-border);
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 28px;
+            margin-left: 0;
+            max-width: 100%;
+            font-weight: 700;
+        }
+
+        .student-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .teacher .bubble {
+            background-color: var(--teacher-bubble-bg);
+            border: 1px solid var(--teacher-border);
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 28px;
+        }
+
+        .bubble-image-slot {
+            margin-top: 1rem;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+            background: rgba(255,255,255,0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+            .bubble-image-slot .img-placeholder {
+                width: 100%;
+                aspect-ratio: 16 / 9;
+                background: #eef2f6;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--text-muted);
+                font-size: 0.8rem;
+                font-weight: 500;
+            }
+
+        .bubble-image-caption {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: #fff;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .clickable-answer {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .clickable-answer:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            }
+
+        .answer-content {
+            display: none;
+            margin-top: 0.5rem;
+            font-weight: 400;
+        }
+
+        .dots {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .is-opened {
+            cursor: default !important;
+        }
+
+            .is-opened .answer-content {
+                display: block;
+                animation: fadeIn 0.5s ease;
+            }
+
+            .is-opened .dots {
+                display: none;
+            }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(transparent 60%, var(--marker-color) 60%);
+            font-weight: 700;
+        }
+
+        .article-footer {
+            max-width: 950px;
+            margin: 0 auto 4rem;
+            padding: 2rem 1rem;
+            border-top: 1px solid #e2e8f0;
+            text-align: right;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 640px) {
+            .profile-top-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .profile-names h1 {
+                font-size: 1.6rem;
+            }
+
+            .profile-main {
+                text-align: left;
+            }
+
+            .message {
+                gap: 0.8rem;
+            }
+
+            .bubble {
+                max-width: 100%;
+            }
+
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        .bubble-image-slot img {
+            width: 50%;
+            height: auto;
+            display: block;
+            margin: 10px auto;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-container">
+        <header class="sns-profile-card">
+            <div class="cover-photo"></div>
+            <div class="profile-main">
+                <div class="profile-top-row">
+                    <div class="profile-icon-wrap">
+                        <img src="teacher.jpg" alt="高見教授">
+                    </div>
+                    <div class="profile-actions">
+                        <a href="https://yokogi0524.github.io/sensei-zukan/index.html"
+                           class="btn btn-secondary"
+                           style="text-decoration: none; display: inline-block; line-height: 1.2; vertical-align: middle;">先生図鑑 005</a>
+                    </div>
+                </div>
+
+                <div class="profile-names">
+                    <h1>高見昭康 / 教授</h1>
+                    <span class="handle">Dr. Akiyasu Takmi / 高見研究室</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">学科</span>
+                    <div class="tag-container">
+                        <span class="info-tag">#機械工学科</span>
+                        <span class="info-tag">#M科</span>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">教科内容</span>
+                    <div class="tag-container">
+                        <span class="info-tag">#材料力学</span>
+                        <span class="info-tag">#機械力学</span>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">研究分野</span>
+                    <div class="tag-container">
+                        <span class="info-tag">#ものづくり技術</span>
+                        <span class="info-tag">#材料力学</span>
+                        <span class="info-tag">#機械材料</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <main class="article-container">
+        <div class="qa-list">
+
+            <!-- 質問1 -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    現在先生が取り組まれている研究について教えてください。
+                </div>
+            </div>
+
+            <div class="message teacher">
+                <div class="avatar-box">
+                    <img src="teacher.jpg" alt="高見先生">
+                    <span class="avatar-label">高見先生</span>
+                </div>
+                <div class="bubble clickable-answer">
+                    <span class="dots">（先生の回答を見る）</span>
+                    <div class="answer-content">
+                        私の研究分野は計算力学で、コンピューターシミュレーションを用いた材料力学の研究を行っています。現在行っているのは、最も丈夫な形を自動的に導き出す「形状最適化」です。特に「トポロジー最適化」では、人間が思いつかないような複雑で面白い形状を創出することが可能です。現在は学生と共に、2次元の柱や梁の解析から発展し、複雑な3次元構造の解析など、力学現象の解明に取り組んでいます。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 質問2 -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    共同研究について教えてください。
+                </div>
+            </div>
+
+            <div class="message teacher">
+                <div class="avatar-box">
+                    <img src="teacher.jpg" alt="高見先生">
+                    <span class="avatar-label">高見先生</span>
+                </div>
+                <div class="bubble clickable-answer">
+                    <span class="dots">（先生の回答を見る）</span>
+                    <div class="answer-content">
+                        共同研究では様々な分野と連携しながら取り組んでいます。島根大学医学部とは、骨を固定するためのネジ（チタンや新素材）の耐久性を解析する医療工学研究を行っています。また、地元企業から装置を借りてIoTよる加工機のモニタリングを行うほか、同じ学科の先生方や他の学科の先生方と協力してバイクの走行解析や波力発電用タービンの効率計算などにも携わってきました。シミュレーションは、多様なモノづくりの現場で応用されている技術です。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 質問3 -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    研究のやりがいについて教えてください。
+                </div>
+            </div>
+
+            <div class="message teacher">
+                <div class="avatar-box">
+                    <img src="teacher.jpg" alt="高見先生">
+                    <span class="avatar-label">高見先生</span>
+                </div>
+                <div class="bubble clickable-answer">
+                    <span class="dots">（先生の回答を見る）</span>
+                    <div class="answer-content">
+                        新しいことを研究して、出来上がることや発見できることが研究者としてのやりがいです。シミュレーションを通じて「何が本当に正しいのか」「どうすれば最も丈夫な形になるのか」という真実を突き止めることが非常に嬉しいですね。また、シミュレーションした形状を、企業が実際に製品化して見せてくれたときも嬉しかったです。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 質問4 -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    先生の経歴について教えてください。
+                </div>
+            </div>
+
+            <div class="message teacher">
+                <div class="avatar-box">
+                    <img src="teacher.jpg" alt="高見先生">
+                    <span class="avatar-label">高見先生</span>
+                </div>
+                <div class="bubble clickable-answer">
+                    <span class="dots">（先生の回答を見る）</span>
+                    <div class="answer-content">
+                        中学校の恩師に勧められて松江高専の機械工学科に進学しました。卒業後は豊橋技術科学大学へ進学しました。技科大の学部4年生の時に、今の研究にまでつながるシミュレーションを始めました。その後、指導教員の勧めで博士課程まで進み、大学・大学院で計7年間研究をしました。その時の恩師に教員を勧められて母校の松江高専に帰ってきました。最初の12年間は数学の教員をしていました。その後、縁があって本来の専門分野である機械工学科の教員へ転向しました。　
+                    </div>
+                </div>
+            </div>
+
+            <!-- 質問5 -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    高専時代の経験について教えてください。
+                </div>
+            </div>
+
+            <div class="message teacher">
+                <div class="avatar-box">
+                    <img src="teacher.jpg" alt="高見先生">
+                    <span class="avatar-label">高見先生</span>
+                </div>
+                <div class="bubble clickable-answer">
+                    <span class="dots">（先生の回答を見る）</span>
+                    <div class="answer-content">
+                        松江高専に在学していたときは寮生活でしたので、他の寮生と楽しく過ごしていました。夏休みには寮の友達の家へ泊りに行ったこともありましたね。また、体育祭や学園祭もいい思い出です。今はありませんが、当時は体育祭でデコレーション制作などを行っており、1年生から4年生までが協力し、大きな絵を掲げて応援合戦をしたのはとてもいい経験になりました。今の学生会活動に近いかもしれませんね。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 質問6 -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    教員を目指されたきっかけを教えてください。
+                </div>
+            </div>
+
+            <div class="message teacher">
+                <div class="avatar-box">
+                    <img src="teacher.jpg" alt="高見先生">
+                    <span class="avatar-label">高見先生</span>
+                </div>
+                <div class="bubble clickable-answer">
+                    <span class="dots">（先生の回答を見る）</span>
+                    <div class="answer-content">
+                        教員を志したきっかけは、家庭教師の経験と恩師の勧めからですね。技科大時代に家庭教師のアルバイトをしていて、教えた生徒の合格などの助けができたことがきっかけで、教えることが好きになりました。さらに、恩師に教員を勧められたこともあり、母校で教えることを目指しました。やはり、教えることで理解してもらえるなど、学生の成長を見ることが一番のモチベーションです。また、卒業の際に感謝の言葉をもらったり、再開した教え子から「今頑張っています」という報告を聞いたりすると非常に嬉しいです。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 質問7 -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    高専生へのメッセージをお願いします。
+                </div>
+            </div>
+
+            <div class="message teacher">
+                <div class="avatar-box">
+                    <img src="teacher.jpg" alt="高見先生">
+                    <span class="avatar-label">高見先生</span>
+                </div>
+                <div class="bubble clickable-answer">
+                    <span class="dots">（先生の回答を見る）</span>
+                    <div class="answer-content">
+                        基礎学力をしっかり身に着けてほしいです。元数学教師として、数学はおろそかにしないでほしいですね。数学ができるとできないとでは、就職後の給料も変わってくるようです。
+                        <br>
+                        最近は松江高専でもスタートアップや海外研修など、さまざまなことにチャレンジする学生が増えています。自分が松江高専の学生だった頃はそういったチャンスが少なく、とても貴重な経験だと思うので、ぜひいろいろなことに携わって、羽ばたいていってほしいです。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 最後のまとめ（感想） -->
+            <div class="message student">
+                <div class="bubble">
+                    <span class="student-label">学生</span>
+                    私の１年生の時の担任が高見先生だったのですが、当時に知ることができなかった研究分野や先生自身のお話を聞くことができてうれしかったです。学生時代に加え、教員になってからも、今日までとても長いあいだ松江高専にいらっしゃるということに驚きました。そんな高見先生だからこそ語ることができる、今と昔の松江高専の違いのお話はとても印象深かったです。
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="article-footer">
+        <p>記事作成日：2026年07月23日</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.clickable-answer').forEach(bubble => {
+            bubble.addEventListener('click', function () {
+                if (!this.classList.contains('is-opened')) {
+                    this.classList.add('is-opened');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

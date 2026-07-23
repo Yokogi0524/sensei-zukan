@@ -35,19 +35,17 @@
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1400px;
             margin: 0 auto 3rem;
-            padding: 4rem 2rem;
+            padding: 2rem 1rem;
             background-color: transparent;
             min-height: 100vh;
             position: relative;
-            box-shadow: none;
-            border-radius: 4px;
         }
 
         .header-section {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
 
             .header-section h1 {
@@ -61,6 +59,7 @@
             max-width: 500px;
             margin: 0 auto;
             position: relative;
+            width: 100%;
         }
 
         .search-icon {
@@ -94,20 +93,22 @@
                 box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             }
 
+        /* --- カード全体の基本スタイル --- */
         .teacher-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
+            /* デフォルト（PC）は1行5列 */
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
         }
 
         .teacher-card {
             background: white;
-            border-radius: 24px;
+            border-radius: 20px;
             overflow: hidden;
             border: 1px solid #eef2f6;
             text-decoration: none;
             color: inherit;
-            transition: 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
             display: flex;
             flex-direction: column;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
@@ -118,6 +119,7 @@
                 box-shadow: 0 15px 30px rgba(0,0,0,0.1);
             }
 
+            /* 学科ごとのバナー背景色 */
             .teacher-card[data-dept="機械工学科"] .card-banner {
                 background: linear-gradient(135deg, var(--color-m), #b91c1c);
             }
@@ -138,40 +140,33 @@
                 background: linear-gradient(135deg, var(--color-c), #1d4ed8);
             }
 
-            /* ▽【追加】人文科学科と数理科学科のバナー（上部背景）をグレーにする */
             .teacher-card[data-dept="人文科学科"] .card-banner,
             .teacher-card[data-dept="数理科学科"] .card-banner {
                 background: linear-gradient(135deg, #cbd5e1, #94a3b8) !important;
             }
 
-            /* ▽【追加】丸いアイコンの枠自体も以前のグレーの雰囲気に合わせる場合 */
-            /*.teacher-card[data-dept="人文科学科"] .card-icon-wrap,
-            .teacher-card[data-dept="数理科学科"] .card-icon-wrap {
-                background-color: #f1f5f9 !important;
-            }*/
-
         .card-banner {
-            height: 100px;
+            height: 70px;
         }
 
         .card-body {
-            padding: 0 1.5rem 2rem;
+            padding: 0 0.75rem 1.25rem;
             text-align: center;
-            margin-top: -55px;
+            margin-top: -40px;
         }
 
         .card-icon-wrap {
-            width: 110px;
-            height: 110px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             background: white;
-            padding: 4px;
+            padding: 3px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             display: inline-flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
             .card-icon-wrap img {
@@ -183,34 +178,34 @@
 
         .card-name {
             font-family: 'Shippori Mincho', serif;
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             margin-bottom: 0.2rem;
         }
 
         .card-dept {
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            margin-bottom: 1.25rem;
+            margin-bottom: 0.75rem;
             display: block;
         }
 
         .card-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.25rem;
             justify-content: center;
         }
 
         .tag {
-            font-size: 0.75rem;
-            padding: 0.3rem 0.7rem;
-            border-radius: 6px;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
             font-weight: 500;
             background: #f1f5f9;
             color: var(--text-muted);
         }
 
-        /* ---------- 上部ナビゲーションタブ ---------- */
+        /* --- 上部ナビゲーション --- */
         .top-nav {
             position: fixed;
             top: 0;
@@ -232,28 +227,6 @@
             align-items: center;
         }
 
-        .nav-links {
-            display: flex;
-            height: 100%;
-            align-items: center;
-            flex-wrap: nowrap;
-        }
-
-        .nav-item {
-            font-family: 'Inter', 'Noto Sans JP', sans-serif;
-            font-size: 1.02rem;
-            text-decoration: none;
-            color: #4b5563;
-            padding: 0 16px;
-            white-space: nowrap;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            border-bottom: 4px solid transparent;
-        }
-
         .nav-logo-area {
             display: flex;
             align-items: center;
@@ -267,61 +240,76 @@
             object-fit: contain;
         }
 
-        .nav-item:hover {
-            background: #f8fafc;
+        .nav-links {
+            display: flex;
+            height: 100%;
+            align-items: center;
+            flex-wrap: nowrap;
         }
 
-        /* --- 各学科のアクティブカラー指定 --- */
-        .nav-item[data-target="all"].active {
-            background-color: #f1f5f9 !important; /* 淡いグレー背景 */
-            color: #334155 !important; /* 濃いグレー文字 */
-            border-bottom-color: var(--color-all) !important;
+        .nav-item {
+            font-size: 1.02rem;
+            text-decoration: none;
+            color: #4b5563;
+            padding: 0 16px;
+            white-space: nowrap;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-bottom: 4px solid transparent;
         }
 
-        /* 機械工学科（赤系） */
-        .nav-item[data-target="機械工学科"].active {
-            background-color: #fff5f5 !important; /* ごく淡い赤背景 */
-            color: #b91c1c !important; /* 読みやすい濃い赤文字 */
-            border-bottom-color: var(--color-m) !important; /* 元の機械工学科の赤下線 */
-        }
+            .nav-item:hover {
+                background: #f8fafc;
+            }
 
-        /* 電気情報工学科（オレンジ系） */
-        .nav-item[data-target="電気情報工学科"].active {
-            background-color: #fffbeb !important; /* ごく淡いオレンジ背景 */
-            color: #c2410c !important; /* 読みやすい濃いオレンジ文字 */
-            border-bottom-color: var(--color-e) !important; /* 元の電気情報工学科のオレンジ下線 */
-        }
+            /* アクティブカラー指定 */
+            .nav-item[data-target="all"].active {
+                background-color: #f1f5f9 !important;
+                color: #334155 !important;
+                border-bottom-color: var(--color-all) !important;
+            }
 
-        /* 電子制御工学科（緑系） */
-        .nav-item[data-target="電子制御工学科"].active {
-            background-color: #f0fdf4 !important; /* ごく淡い緑背景 */
-            color: #15803d !important; /* 読みやすい濃い緑文字 */
-            border-bottom-color: var(--color-d) !important; /* 元の電子制御工学科の緑下線 */
-        }
+            .nav-item[data-target="機械工学科"].active {
+                background-color: #fff5f5 !important;
+                color: #b91c1c !important;
+                border-bottom-color: var(--color-m) !important;
+            }
 
-        /* 情報工学科（紫系） */
-        .nav-item[data-target="情報工学科"].active {
-            background-color: #faf5ff !important; /* ごく淡い紫背景 */
-            color: #7e22ce !important; /* 読みやすい濃い紫文字 */
-            border-bottom-color: var(--color-j) !important; /* 元の情報工学科の紫下線 */
-        }
+            .nav-item[data-target="電気情報工学科"].active {
+                background-color: #fffbeb !important;
+                color: #c2410c !important;
+                border-bottom-color: var(--color-e) !important;
+            }
 
-        /* 環境・建設工学科（青系） */
-        .nav-item[data-target="環境・建設工学科"].active {
-            background-color: #eff6ff !important; /* ごく淡い青背景 */
-            color: #1d4ed8 !important; /* 読みやすい濃い青文字 */
-            border-bottom-color: var(--color-c) !important; /* 元の環境・建設工学科の青下線 */
-        }
+            .nav-item[data-target="電子制御工学科"].active {
+                background-color: #f0fdf4 !important;
+                color: #15803d !important;
+                border-bottom-color: var(--color-d) !important;
+            }
 
-        /* 人文科学科・数理科学科（グレー系） */
-        .nav-item[data-target="人文科学科"].active,
-        .nav-item[data-target="数理科学科"].active {
-            background-color: #f8fafc !important; /* 淡いグレー背景 */
-            color: #475569 !important; /* 濃いグレー文字 */
-            border-bottom-color: var(--color-all) !important;
-        }
+            .nav-item[data-target="情報工学科"].active {
+                background-color: #faf5ff !important;
+                color: #7e22ce !important;
+                border-bottom-color: var(--color-j) !important;
+            }
 
-        /* ---------- スマホ用ハンバーガーメニューのスタイル ---------- */
+            .nav-item[data-target="環境・建設工学科"].active {
+                background-color: #eff6ff !important;
+                color: #1d4ed8 !important;
+                border-bottom-color: var(--color-c) !important;
+            }
+
+            .nav-item[data-target="人文科学科"].active,
+            .nav-item[data-target="数理科学科"].active {
+                background-color: #f8fafc !important;
+                color: #475569 !important;
+                border-bottom-color: var(--color-all) !important;
+            }
+
+        /* ハンバーガーボタン */
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -331,7 +319,7 @@
             background: transparent;
             border: none;
             cursor: pointer;
-            z-index: 110000; /* nav-linksより前面に配置 */
+            z-index: 110000;
         }
 
             .menu-toggle span {
@@ -356,29 +344,41 @@
 
 
         /* ==========================================================
-           【追加】画面幅が1024px以下のスマホ・タブレット環境
-        ========================================================== */
+   【レスポンシブ設定】
+========================================================== */
+
+        /* --- 1. タブレット＆スマホ (1024px以下) --- */
         @media (max-width: 1024px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            /* タブレットは3列表示で余裕を持たせる */
+            .teacher-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.85rem;
+            }
+
+            /* ハンバーガーメニュー有効化 */
             .menu-toggle {
-                display: flex; /* スマホ環境で3本線を表示 */
+                display: flex;
             }
 
             .nav-links {
                 position: fixed;
-                top: 100px; /* ヘッダーの高さ分下げる */
-                left: 100%; /* 初期状態は画面の右外に隠す */
+                top: 100px;
+                left: 100%;
                 width: 100%;
                 height: calc(100vh - 100px);
                 background: white;
-                flex-direction: column; /* タブを縦並びにする */
+                flex-direction: column;
                 align-items: flex-start;
-                padding: 2rem;
+                padding: 1.5rem;
                 overflow-y: auto;
-                transition: left 0.3s ease; /* スライドインアニメーション */
+                transition: left 0.3s ease;
                 z-index: 100000;
             }
 
-                /* JSで .open クラスがついたら画面内にスライドインさせる */
                 .nav-links.open {
                     left: 0;
                 }
@@ -386,33 +386,60 @@
             .nav-item {
                 width: 100%;
                 height: auto;
-                padding: 15px 0;
-                font-size: 1.1rem;
-                border-bottom: 1px solid #edf2f7; /* 縦並びの区切り線 */
-                border-bottom-width: 1px !important; /* アクティブ時の4px線をリセット */
+                padding: 15px 10px;
+                font-size: 1.05rem;
+                border-bottom: 1px solid #edf2f7 !important;
             }
 
-                /* スマホ時のアクティブ表現（下線ではなく左側の縦線や文字色にするなど） */
                 .nav-item.active {
                     border-bottom-color: #edf2f7 !important;
-                    padding-left: 10px;
+                    padding-left: 15px;
                     border-left: 4px solid currentColor;
                 }
         }
 
-
-        /* ==========================================================
-           1025px以上のPC環境でのみ横スクロールを有効化する例
-        ========================================================== */
-        @media (min-width: 1025px) {
-            .nav-container {
-                /* nav-linksが溢れたらスクロールできるように、幅制限とoverflowを設定 */
-                overflow-x: auto;
-                white-space: nowrap;
-                -webkit-overflow-scrolling: touch; /* スムーズなスクロール用 */
+        /* --- 2. スマホ（600px以下）: 1行2人表示 --- */
+        @media (max-width: 600px) {
+            .teacher-grid {
+                grid-template-columns: repeat(2, 1fr); /* 完全に1行2人 */
+                gap: 0.6rem;
             }
 
-                /* スクロールバーの見た目をすっきりさせる（お好みで） */
+            .card-body {
+                padding: 0 0.4rem 0.8rem;
+            }
+
+            .card-icon-wrap {
+                width: 68px;
+                height: 68px;
+            }
+
+            .card-name {
+                font-size: 0.95rem;
+            }
+
+            .card-dept {
+                font-size: 0.7rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .tag {
+                font-size: 0.6rem;
+                padding: 0.15rem 0.3rem;
+            }
+        }
+
+        /* --- 3. PC環境 (1025px以上) --- */
+        @media (min-width: 1025px) {
+            .teacher-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .nav-container {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
                 .nav-container::-webkit-scrollbar {
                     height: 4px;
                 }
@@ -423,21 +450,13 @@
                 }
 
             .nav-links {
-                /* 横幅を縮めず、要素のなりゆきの幅を維持する */
                 flex-shrink: 0;
             }
 
-            /* 1つのタブの左右の余白を少し詰めて、極力1画面に収まりやすくする */
             .nav-item {
                 padding: 0 12px !important;
-                font-size: 0.95rem !important; /* 文字サイズもわずかに縮小 */
+                font-size: 0.95rem !important;
             }
-
-                .nav-item.active {
-                    background-color: #f1f5f9 !important;
-                    border-radius: 8px;
-                    font-weight: 700;
-                }
         }
     </style>
 </head>
@@ -484,15 +503,15 @@
 
         <!-- 先生一覧グリッド -->
         <div class="teacher-grid" id="teacherGrid">
-            <div class="teacher-card" data-dept="機械工学科">
+            <a href="takami-akiyasu.html" class="teacher-card" data-dept="機械工学科">
                 <div class="card-banner"></div>
                 <div class="card-body">
                     <div class="card-icon-wrap"><img src="teacher.jpg" alt="高見 昭康"></div>
                     <h2 class="card-name">高見 昭康</h2>
                     <span class="card-dept">機械工学科 / 教授</span>
-                    <div class="card-tags"><span class="tag">#材料力学</span><span class="tag">#計算力学</span></div>
+                    <div class="card-tags"><span class="tag">#ものづくり技術</span><span class="tag">#材料力学</span></div>
                 </div>
-            </div>
+            </a>
 
             <a href="ashida-yoichiro.html" class="teacher-card" data-dept="電気情報工学科">
                 <div class="card-banner"></div>
